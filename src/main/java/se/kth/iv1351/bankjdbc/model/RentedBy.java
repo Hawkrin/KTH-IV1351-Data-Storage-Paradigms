@@ -1,5 +1,8 @@
 package se.kth.iv1351.bankjdbc.model;
 
+/**
+ * Information about people renting instruments
+ */
 public class RentedBy implements RentedByDTO {
     private String first_name;
     private String last_name;
@@ -7,6 +10,15 @@ public class RentedBy implements RentedByDTO {
     private String brand;
     private int quantity;
 
+    /**
+     * Creates a table of person renting data
+     * 
+     * @param first_name firstname of person
+     * @param last_name lastname of person
+     * @param type instrument type
+     * @param brand instrument brand
+     * @param quantity amount rented
+     */
     public RentedBy(String first_name, String last_name, String type, String brand, int quantity) {
         this.first_name = first_name;
         this.last_name = last_name;
@@ -15,9 +27,10 @@ public class RentedBy implements RentedByDTO {
         this.quantity = quantity;
     }
 
-    public String getFirstName() {
-        return this.first_name;
-    }
+    /**
+     * retrieves first name of a person renting
+     */
+    public String getFirstName() { return this.first_name; }
 
     public String toString() {
         StringBuilder stringRepresentation = new StringBuilder();

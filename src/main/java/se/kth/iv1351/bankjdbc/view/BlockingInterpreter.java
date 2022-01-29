@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import se.kth.iv1351.bankjdbc.controller.Controller;
-import se.kth.iv1351.bankjdbc.model.AccountDTO;
 import se.kth.iv1351.bankjdbc.model.Instrument;
 import se.kth.iv1351.bankjdbc.model.InstrumentDTO;
 import se.kth.iv1351.bankjdbc.model.RentedBy;
@@ -83,41 +82,6 @@ public class BlockingInterpreter {
                         break;
                     case QUIT:
                         keepReceivingCmds = false;
-                        break;
-                    case NEW:
-                        ctrl.createAccount(cmdLine.getParameter(0));
-                        break;
-                    case DELETE:
-                        ctrl.deleteAccount(cmdLine.getParameter(0));
-                        break;
-                    case LIST:
-                        List<? extends AccountDTO> accounts = null;
-                        if (cmdLine.getParameter(0).equals("")) {
-                            accounts = ctrl.getAllAccounts();
-                        } else {
-                            accounts = ctrl.getAccountsForHolder(cmdLine.getParameter(0));
-                        }
-                        for (AccountDTO account : accounts) {
-                            System.out.println("acct no: " + account.getAccountNo() + ", "
-                                    + "holder: " + account.getHolderName() + ", "
-                                    + "balance: " + account.getBalance());
-                        }
-                        break;
-                    case DEPOSIT:
-                        ctrl.deposit(cmdLine.getParameter(0),
-                                Integer.parseInt(cmdLine.getParameter(1)));
-                        break;
-                    case WITHDRAW:
-                        ctrl.withdraw(cmdLine.getParameter(0),
-                                Integer.parseInt(cmdLine.getParameter(1)));
-                        break;
-                    case BALANCE:
-                        AccountDTO acct = ctrl.getAccount(cmdLine.getParameter(0));
-                        if (acct != null) {
-                            System.out.println(acct.getBalance());
-                        } else {
-                            System.out.println("No such account");
-                        }
                         break;
                     case INSTRUMENTS:
                         List<? extends InstrumentDTO> instruments = null;

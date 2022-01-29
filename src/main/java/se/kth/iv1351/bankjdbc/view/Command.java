@@ -65,7 +65,13 @@ public enum Command {
      */
     ILLEGAL_COMMAND,
 
+    /**
+     * List all available instruments.
+     */
     INSTRUMENTS,
 
+    /**
+     *  List all students which have rented instruments, and which instruments they have rented.
+     */
     RENTED
 }
