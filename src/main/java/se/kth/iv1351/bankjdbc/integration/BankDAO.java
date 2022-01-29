@@ -33,7 +33,8 @@ import java.util.List;
 import se.kth.iv1351.bankjdbc.model.Account;
 import se.kth.iv1351.bankjdbc.model.AccountDTO;
 import se.kth.iv1351.bankjdbc.model.Instrument;
-import se.kth.iv1351.bankjdbc.model.Student;
+import se.kth.iv1351.bankjdbc.model.RentedBy;
+import se.kth.iv1351.bankjdbc.model.RentedByDTO;
 
 /**
  * This data access object (DAO) encapsulates all database calls in the bank
@@ -66,6 +67,7 @@ public class BankDAO {
 
     private PreparedStatement listAllInstruments;
     private PreparedStatement listAllRentedInstruments;
+    private PreparedStatement listAllRented;
 
     /**
      * Constructs a new DAO object connected to the bank database.
@@ -260,6 +262,17 @@ public class BankDAO {
         }
     }
 
+    /**
+     * 
+     * @return
+     * @throws BankDBException
+     */
+
+    /*
+     * public List<Student> getAllPersons() {
+     * String failureMsg = "Could not find persons";
+     * }
+     */
 
     /**
      * 
@@ -268,35 +281,23 @@ public class BankDAO {
      */
 
     /*
-    public List<Student> getAllPersons() {
-        String failureMsg = "Could not find persons";
-    }
-    */
-
-    /**
+     * public List<Instrument> listAllRentedInstruments() throws BankDBException {
+     * String failureMsg = "Could not find rented instruments";
+     * ResultSet result = null;
+     * List<Instrument> instruments = new ArrayList<>();
+     * try {
+     * result = listAllRentedInstruments.executeQuery();
+     * while (result.next()) {
      * 
-     * @return
-     * @throws BankDBException
+     * }
+     * return instruments;
+     * } catch (SQLException sqle) {
+     * handleException(failureMsg, sqle);
+     * } finally {
+     * closeResultSet(failureMsg, result);
+     * }
+     * }
      */
-
-    /*
-    public List<Instrument> listAllRentedInstruments() throws BankDBException {
-        String failureMsg = "Could not find rented instruments";
-        ResultSet result = null;
-        List<Instrument> instruments = new ArrayList<>();
-        try {
-            result = listAllRentedInstruments.executeQuery();
-            while (result.next()) {
-
-            }
-            return instruments;
-        } catch (SQLException sqle) {
-            handleException(failureMsg, sqle);
-        } finally {
-            closeResultSet(failureMsg, result);
-        }
-    }
-    */
 
     /**
      * 
@@ -326,6 +327,31 @@ public class BankDAO {
         return instruments;
     }
 
+    public List<RentedBy> listAllRentedInstruments() throws BankDBException {
+        String failureMsg = "Could noit find data";
+        ResultSet result = null;
+        List<RentedBy> rentedBy = new ArrayList<>();
+        try {
+            result = listAllRented.executeQuery();
+            while (result.next()) {
+                rentedBy.add(new RentedBy(
+                        result.getString("first_name"),
+                        result.getString("last_name"),
+                        result.getString("instrument_type"),
+                        result.getString("brand"),
+                        result.getInt("quantity")));
+            }
+
+            connectionToSchool.commit();
+        } catch (SQLException sqle) {
+            handleException(failureMsg, sqle);
+        } finally {
+            closeResultSet(failureMsg, result);
+        }
+
+        return rentedBy;
+    }
+
     /**
      * Commits the current transaction.
      * 
@@ -341,10 +367,10 @@ public class BankDAO {
 
     private void connectToBankDB() throws ClassNotFoundException, SQLException {
         connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bankdb",
-                "postgres", "rj95e7vs");
+                "postgres", "iggy7521");
 
-        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/task3",
-                "postgres", "rj95e7vs");
+        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicHighSL",
+                "postgres", "iggy7521");
 
         // connection =
         // DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb",
@@ -400,6 +426,14 @@ public class BankDAO {
         listAllInstruments = connectionToSchool.prepareStatement("SELECT * FROM " + INSTRUMENT_TABLE_NAME);
         listAllRentedInstruments = connectionToSchool.prepareStatement("SELECT * FROM " + INSTRUMENT_RENTED_TABLE_NAME);
 
+        // SELECT s.instrument_type instrument_type, s.instrument_brand brand,
+        // p.first_name, p.last_name, r.amount quantity FROM instrument_renting r INNER
+        // JOIN instrument_stock s ON r.instrument_stock_id = s.instrument_stock_id
+        // INNER JOIN student ON student.student_id = r.student_id INNER JOIN person p
+        // ON p.person_id = student.person_id
+
+        listAllRented = connectionToSchool.prepareStatement(
+                "SELECT s.instrument_type instrument_type, s.instrument_brand brand, p.first_name, p.last_name, r.amount quantity FROM instrument_renting r INNER JOIN instrument_stock s ON r.instrument_stock_id = s.instrument_stock_id INNER JOIN student ON student.student_id = r.student_id INNER JOIN person p ON p.person_id = student.person_id");
     }
 
     private void handleException(String failureMsg, Exception cause) throws BankDBException {

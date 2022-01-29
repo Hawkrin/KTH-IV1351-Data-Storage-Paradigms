@@ -33,6 +33,7 @@ import se.kth.iv1351.bankjdbc.model.AccountDTO;
 import se.kth.iv1351.bankjdbc.model.Instrument;
 import se.kth.iv1351.bankjdbc.model.AccountException;
 import se.kth.iv1351.bankjdbc.model.RejectedException;
+import se.kth.iv1351.bankjdbc.model.RentedBy;
 
 /**
  * This is the application's only controller, all calls to the model pass here.
@@ -212,13 +213,20 @@ public class Controller {
         }
     }
 
-    /*
     public List<? extends Instrument> getAllInstruments() throws Exception {
         try {
-            return bankDb.listAllInstruemtsAvailable();
+            return bankDb.listAllInstrumentsAvailable();
         } catch (Exception e) {
             throw new Exception("Unable to list accounts.", e);
         }
     }
-    */
+
+    public List<? extends RentedBy> getAllRented() throws Exception {
+        try {
+            return bankDb.listAllRentedInstruments();
+        } catch (Exception e) {
+            throw new Exception("Unable to list rented instruments.", e);
+        }
+    }
+
 }

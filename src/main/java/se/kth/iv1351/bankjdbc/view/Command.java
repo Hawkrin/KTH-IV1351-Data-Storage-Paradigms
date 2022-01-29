@@ -65,5 +65,7 @@ public enum Command {
      */
     ILLEGAL_COMMAND,
 
-    INSTRUMENTS
+    INSTRUMENTS,
+
+    RENTED
 }

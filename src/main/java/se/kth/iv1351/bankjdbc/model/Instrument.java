@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Represent an instrument
  */
-public class Instrument {
+public class Instrument implements InstrumentDTO {
     private String intrument_type;
     private int quantity;
     private String brand;
@@ -44,28 +44,36 @@ public class Instrument {
      * 
      * @return the person renting
      */
-    public List<String> getRentedBy() { return rented_by; }
+    public List<String> getRentedBy() {
+        return rented_by;
+    }
 
     /**
      * get the instrument type
      * 
      * @return The instrument type
      */
-    public String getInstrumentType() { return intrument_type; }
+    public String getInstrumentType() {
+        return intrument_type;
+    }
 
     /**
      * get the instrument quantity
      * 
      * @return The instrument quantity
      */
-    public int getQuantity() { return quantity; }
+    public int getQuantity() {
+        return quantity;
+    }
 
     /**
      * get the instrument brand
      * 
      * @return The instrument brand
      */
-    public String getBrand() { return brand; }
+    public String getBrand() {
+        return brand;
+    }
 
     @Override
     public String toString() {
@@ -77,8 +85,6 @@ public class Instrument {
         stringRepresentation.append(brand);
         stringRepresentation.append(", quantity: ");
         stringRepresentation.append(quantity);
-        stringRepresentation.append(", rented by: ");
-        stringRepresentation.append(rented_by);
         stringRepresentation.append("]");
         return stringRepresentation.toString();
     }

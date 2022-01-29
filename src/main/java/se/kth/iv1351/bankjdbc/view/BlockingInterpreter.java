@@ -29,6 +29,10 @@ import java.util.Scanner;
 
 import se.kth.iv1351.bankjdbc.controller.Controller;
 import se.kth.iv1351.bankjdbc.model.AccountDTO;
+import se.kth.iv1351.bankjdbc.model.Instrument;
+import se.kth.iv1351.bankjdbc.model.InstrumentDTO;
+import se.kth.iv1351.bankjdbc.model.RentedBy;
+import se.kth.iv1351.bankjdbc.model.RentedByDTO;
 
 /**
  * Reads and interprets user commands. This command interpreter is blocking, the
@@ -115,12 +119,20 @@ public class BlockingInterpreter {
                             System.out.println("No such account");
                         }
                         break;
-                    /*case INSTRUMENTS:
+                    case INSTRUMENTS:
                         List<? extends InstrumentDTO> instruments = null;
                         instruments = ctrl.getAllInstruments();
                         for (InstrumentDTO instrument : instruments) {
                             System.out.println(instrument);
-                        }*/
+                        }
+                        break;
+                    case RENTED:
+                        List<? extends RentedByDTO> rented_by = null;
+                        rented_by = ctrl.getAllRented();
+                        for (RentedByDTO rented : rented_by) {
+                            System.out.println(rented);
+                        }
+                        break;
                     default:
                         System.out.println("illegal command");
                 }
