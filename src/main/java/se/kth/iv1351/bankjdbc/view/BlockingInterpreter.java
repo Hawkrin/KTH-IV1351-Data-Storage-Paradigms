@@ -26,7 +26,6 @@ package se.kth.iv1351.bankjdbc.view;
 
 import java.util.List;
 import java.util.Scanner;
-
 import se.kth.iv1351.bankjdbc.controller.Controller;
 import se.kth.iv1351.bankjdbc.model.Instrument;
 import se.kth.iv1351.bankjdbc.model.InstrumentDTO;

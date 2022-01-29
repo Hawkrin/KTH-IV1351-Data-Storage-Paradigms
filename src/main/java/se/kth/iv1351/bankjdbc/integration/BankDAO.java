@@ -90,7 +90,7 @@ public class BankDAO {
     }
 
     public List<RentedBy> listAllRentedInstruments() throws BankDBException {
-        String failureMsg = "Could noit find data";
+        String failureMsg = "Could not find data";
         ResultSet result = null;
         List<RentedBy> rentedBy = new ArrayList<>();
         try {
@@ -139,12 +139,6 @@ public class BankDAO {
         // "mysql", "mysql");
         connection.setAutoCommit(false);
         connectionToSchool.setAutoCommit(false);
-    
-
-
-        /**
-         * MADE BY US
-         */
 
         listAllInstruments = connectionToSchool.prepareStatement("SELECT * FROM " + INSTRUMENT_TABLE_NAME);
         listAllRentedInstruments = connectionToSchool.prepareStatement("SELECT * FROM " + INSTRUMENT_RENTED_TABLE_NAME);
