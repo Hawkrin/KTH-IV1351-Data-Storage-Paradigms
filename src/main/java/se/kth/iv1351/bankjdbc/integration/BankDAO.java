@@ -46,16 +46,6 @@ public class BankDAO {
 
     private Connection connection;
     private Connection connectionToSchool;
-    private PreparedStatement createHolderStmt;
-    private PreparedStatement findHolderPKStmt;
-    private PreparedStatement createAccountStmt;
-    private PreparedStatement findAccountByNameStmt;
-    private PreparedStatement findAccountByAcctNoStmt;
-    private PreparedStatement findAccountByAcctNoStmtLockingForUpdate;
-    private PreparedStatement findAllAccountsStmt;
-    private PreparedStatement deleteAccountStmt;
-    private PreparedStatement changeBalanceStmt;
-
     private PreparedStatement listAllInstruments;
     private PreparedStatement listAllRentedInstruments;
     private PreparedStatement listAllRented;
