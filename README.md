@@ -1,10 +1,10 @@
 
-A point console "website" which gets and manipulates data from a database created in postgreSQL
+A console "website" which gets and manipulates data from a database created in postgreSQL
 
 Learning Outcome:
 
 - Analysis in the form of a Conceptual model and a Physical/Logical model.
-- Create a database and insert template data(postgeSQL)
+- Create a database and insert template data(postgreSQL)
 - Creating queries which can be used by a java program.
 
 Physical/Logical model:
