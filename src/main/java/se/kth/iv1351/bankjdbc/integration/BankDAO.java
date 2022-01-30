@@ -63,8 +63,10 @@ public class BankDAO {
     }
 
     /**
+     * Lists all instruments which are available for rental.
      * 
-     * @throws BankDBException
+     * @return the instruments available for rental
+     * @throws BankDBException if no data can be reached.
      */
     public List<Instrument> listAllInstrumentsAvailable() throws BankDBException {
         String failureMsg = "Could not find data";
@@ -86,11 +88,17 @@ public class BankDAO {
         } finally {
             closeResultSet(failureMsg, result);
         }
-
         return instruments;
     }
 
-    public void deleteOnGoingRent(int id) throws BankDBException {
+    /**
+     *  Deletes an ongoing rent from the instrument rental list. Finds the rental to remove
+     * via the rental id.
+     * 
+     * @param id the id of the rental
+     * @throws BankDBException if the rental can't be deleted.
+     */
+    public void deleteOnGoingRental(int id) throws BankDBException {
         String failiureMsg = "Could not delete ongoing rent.";
         try {
             terminate_ongoing_renting.setInt(1, id);
@@ -104,9 +112,14 @@ public class BankDAO {
         } catch (SQLException sqle) {
             handleException(failiureMsg, sqle);
         }
-
     }
 
+    /**
+     * takes in and displays the list of all rented instruments as a list.
+     * 
+     * @return the list of all rented instruments
+     * @throws BankDBException if can't reach the database.
+     */
     public List<RentedBy> listAllRentedInstruments() throws BankDBException {
         String failureMsg = "Could not find data";
         ResultSet result = null;
@@ -154,10 +167,10 @@ public class BankDAO {
 
     private void connectToBankDB() throws ClassNotFoundException, SQLException {
         connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bankdb",
-                "postgres", "rj95e7vs");
+                "postgres", "iggy7521");
 
-        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/task3",
-                "postgres", "rj95e7vs");
+        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusciHighSL",
+                "postgres", "iggy7521");
 
         // connection =
         // DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb",

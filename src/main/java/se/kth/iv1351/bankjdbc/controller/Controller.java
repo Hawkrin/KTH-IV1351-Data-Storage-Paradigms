@@ -76,9 +76,15 @@ public class Controller {
         }
     }
 
-    public void removeOngoingRent(int id) throws Exception {
+    /**
+     * Removes an ongoing rental from the rental table
+     * 
+     * @param id the rental id
+     * @throws Exception if a rental can't be removed.
+     */
+    public void removeOngoingRental(int id) throws Exception {
         try {
-            bankDb.deleteOnGoingRent(id);
+            bankDb.deleteOnGoingRental(id);
         } catch (Exception e) {
             throw new Exception("Unable to remove ongoing rent.", e);
         }
