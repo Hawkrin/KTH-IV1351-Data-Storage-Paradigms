@@ -40,7 +40,7 @@ import se.kth.iv1351.bankjdbc.model.RentedByDTO;
  * database.
  */
 public class BankDAO {
-    
+
     private static final String INSTRUMENT_TABLE_NAME = "instrument_stock";
     private static final String INSTRUMENT_RENTED_TABLE_NAME = "instrument_renting";
 
@@ -49,6 +49,7 @@ public class BankDAO {
     private PreparedStatement listAllInstruments;
     private PreparedStatement listAllRentedInstruments;
     private PreparedStatement listAllRented;
+    private PreparedStatement terminate_ongoing_renting;
 
     /**
      * Constructs a new DAO object connected to the bank database.
@@ -89,6 +90,23 @@ public class BankDAO {
         return instruments;
     }
 
+    public void deleteOnGoingRent(int id) throws BankDBException {
+        String failiureMsg = "Could not delete ongoing rent.";
+        try {
+            terminate_ongoing_renting.setInt(1, id);
+            int updatedRows = terminate_ongoing_renting.executeUpdate();
+
+            if (updatedRows != 1) {
+                handleException(failiureMsg, null);
+            }
+
+            connectionToSchool.commit();
+        } catch (SQLException sqle) {
+            handleException(failiureMsg, sqle);
+        }
+
+    }
+
     public List<RentedBy> listAllRentedInstruments() throws BankDBException {
         String failureMsg = "Could not find data";
         ResultSet result = null;
@@ -96,12 +114,19 @@ public class BankDAO {
         try {
             result = listAllRented.executeQuery();
             while (result.next()) {
+
+                // Not rented anymore...
+                if (result.getBoolean("terminated") == true) {
+                    continue;
+                }
+
                 rentedBy.add(new RentedBy(
                         result.getString("first_name"),
                         result.getString("last_name"),
                         result.getString("instrument_type"),
                         result.getString("brand"),
-                        result.getInt("quantity")));
+                        result.getInt("quantity"),
+                        result.getInt("instrument_renting_id")));
             }
 
             connectionToSchool.commit();
@@ -129,10 +154,10 @@ public class BankDAO {
 
     private void connectToBankDB() throws ClassNotFoundException, SQLException {
         connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bankdb",
-                "postgres", "iggy7521");
+                "postgres", "rj95e7vs");
 
-        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicHighSL",
-                "postgres", "iggy7521");
+        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/task3",
+                "postgres", "rj95e7vs");
 
         // connection =
         // DriverManager.getConnection("jdbc:mysql://localhost:3306/bankdb",
@@ -150,7 +175,11 @@ public class BankDAO {
         // ON p.person_id = student.person_id
 
         listAllRented = connectionToSchool.prepareStatement(
-                "SELECT s.instrument_type instrument_type, s.instrument_brand brand, p.first_name, p.last_name, r.amount quantity FROM instrument_renting r INNER JOIN instrument_stock s ON r.instrument_stock_id = s.instrument_stock_id INNER JOIN student ON student.student_id = r.student_id INNER JOIN person p ON p.person_id = student.person_id");
+                "SELECT s.instrument_type instrument_type, r.instrument_renting_id , r.terminated, s.instrument_brand brand, p.first_name, r.student_id, p.person_id, p.last_name, r.amount quantity FROM instrument_renting r INNER JOIN instrument_stock s ON r.instrument_stock_id = s.instrument_stock_id INNER JOIN student ON student.student_id = r.student_id INNER JOIN person p ON p.person_id = student.person_id");
+
+        terminate_ongoing_renting = connectionToSchool
+                .prepareStatement("UPDATE instrument_renting SET terminated = true WHERE instrument_renting_id = ?");
+
     }
 
     private void handleException(String failureMsg, Exception cause) throws BankDBException {

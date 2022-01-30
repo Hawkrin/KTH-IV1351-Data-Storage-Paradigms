@@ -44,7 +44,8 @@ SELECT
 	s.instrument_brand brand,
 	p.first_name,
 	p.last_name,
-	r.amount quantity
+	r.amount quantity,
+	p.person_id
 FROM 
 	instrument_renting r
 INNER JOIN instrument_stock s

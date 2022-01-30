@@ -49,7 +49,11 @@ public enum Command {
      */
     INSTRUMENTS,
     /**
-     *  List all students which have rented instruments, and which instruments they have rented.
+     * List all students which have rented instruments, and which instruments they
+     * have rented.
      */
-    RENTED
+    RENTED,
+
+    REMOVE
+
 }

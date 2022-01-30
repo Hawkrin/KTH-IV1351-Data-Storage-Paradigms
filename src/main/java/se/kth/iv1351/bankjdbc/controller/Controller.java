@@ -62,7 +62,8 @@ public class Controller {
     }
 
     /**
-     * get all people that have rented instruments, as well as how which instrument they have rented and of what quantity
+     * get all people that have rented instruments, as well as how which instrument
+     * they have rented and of what quantity
      * 
      * @return tables of people and what instruments they have rented
      * @throws Exception if unable to retrieve list of people and their instruments
@@ -72,6 +73,14 @@ public class Controller {
             return bankDb.listAllRentedInstruments();
         } catch (Exception e) {
             throw new Exception("Unable to list rented instruments.", e);
+        }
+    }
+
+    public void removeOngoingRent(int id) throws Exception {
+        try {
+            bankDb.deleteOnGoingRent(id);
+        } catch (Exception e) {
+            throw new Exception("Unable to remove ongoing rent.", e);
         }
     }
 
