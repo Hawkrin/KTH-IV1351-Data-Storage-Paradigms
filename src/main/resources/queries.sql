@@ -23,6 +23,7 @@ $BODY$;
 ALTER FUNCTION public.first_question(character varying, character varying)
     OWNER TO postgres;
 
+
 /*QUESTION 2*/
 CREATE OR REPLACE FUNCTION public.second_question(
 	character varying)
@@ -49,7 +50,7 @@ $BODY$;
 ALTER FUNCTION public.second_question(character varying)
     OWNER TO postgres;
 
-/*QUESTION 3*/
+/*QUESTION 3*/ 
 CREATE OR REPLACE FUNCTION public.third_question(
 	character varying)
     RETURNS record
