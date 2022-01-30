@@ -38,21 +38,3 @@ insert into instrument_stock (instrument_type, instrument_quantity, instrument_b
 insert into instrument_stock (instrument_type, instrument_quantity, instrument_brand, instrument_price) values ('Microphone', '25', 'Rode', '800');
 insert into instrument_stock (instrument_type, instrument_quantity, instrument_brand, instrument_price) values ('Microphone', '2', 'IK Multimedia', '1200');
 insert into instrument_stock (instrument_type, instrument_quantity, instrument_brand, instrument_price) values ('Microphone', '15', 'Pearl', '900');
-
-SELECT
-	s.instrument_type instrument_type,
-	s.instrument_brand brand,
-	p.first_name,
-	p.last_name,
-	r.amount quantity,
-	p.person_id
-FROM 
-	instrument_renting r
-INNER JOIN instrument_stock s
-	ON r.instrument_stock_id = s.instrument_stock_id
-INNER JOIN student
-	ON student.student_id = r.student_id
-INNER JOIN person p
-	ON p.person_id = student.person_id
-	
-	
