@@ -98,7 +98,7 @@ public class BlockingInterpreter {
                         break;
                     case REMOVE:
                         ctrl.removeOngoingRental(Integer.parseInt(cmdLine.getParameter(0)));
-                        System.out.println("Removed rent with id: " + cmdLine.getParameter(0));
+                        System.out.println("Removed rental with id: " + cmdLine.getParameter(0));
                         break;
                     default:
                         System.out.println("illegal command");

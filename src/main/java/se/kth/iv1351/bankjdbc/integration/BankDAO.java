@@ -169,7 +169,7 @@ public class BankDAO {
         connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bankdb",
                 "postgres", "iggy7521");
 
-        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusciHighSL",
+        connectionToSchool = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicHighSchool",
                 "postgres", "iggy7521");
 
         // connection =
