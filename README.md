@@ -1,5 +1,5 @@
 
-A point console "website" which gets and manipulates data from a database created in postgreSQL
+A console "website" which gets and manipulates data from a database created in postgreSQL
 
 Learning Outcome:
 
