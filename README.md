@@ -1,3 +1,19 @@
+
+A point console "website" which gets and manipulates data from a database created in postgreSQL
+
+Learning Outcome:
+
+- Analysis in the form of a Conceptual model and a Physical/Logical model.
+- Create a database and insert template data(postgeSQL)
+- Creating queries which can be used by a java program.
+
+Physical/Logical model:
+![analysFix1](https://i.imgur.com/ONPRg5G.png)
+
+Conceptual Model:
+![analysFIX3](https://i.imgur.com/Ca53a5p.png)
+
+
 # A JDBC application with an appropriately layered architecture
 
 This is an example of how an integration layer can be used to organize an application containing database calls.
