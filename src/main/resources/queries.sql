@@ -1,14 +1,12 @@
 /*QUESTION 1*/
-CREATE OR REPLACE FUNCTION public.first_question(
-	character varying,
-	character varying)
-    RETURNS integer
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-AS $BODY$
 declare
 	amount bigint;
+	individual_lessons bigint;
+	group_lessons bigint;
+	ensemble_lessons bigint;
+	
+	id_lesson bigint;
+	
 begin
 	select count(*)
 	into amount
@@ -16,22 +14,34 @@ begin
 	where EXTRACT(YEAR FROM date) = $1::numeric AND
 	EXTRACT(MONTH FROM date) = $2::numeric;
 	
-	return amount;
+	select lesson_id
+	into id_lesson
+	from lesson
+	where EXTRACT(YEAR FROM date) = $1::numeric AND
+	EXTRACT(MONTH FROM date) = $2::numeric;
+	
+	select count(*)
+	into individual_lessons
+	from individual_lesson
+	where lesson_id=id_lesson;
+	
+	select count(*)
+	into group_lessons
+	from group_lesson
+	where lesson_id=id_lesson;
+		
+	select count(*)
+	into ensemble_lessons
+	from ensembles
+	where lesson_id=id_lesson;
+	
+	return  (individual_lessons::numeric+ group_lessons::numeric+ensemble_lessons::numeric)::name || ' ' || individual_lessons || ' ' || group_lessons || ' ' || ensemble_lessons;
+	
+	
 end;
-$BODY$;
-
-ALTER FUNCTION public.first_question(character varying, character varying)
-    OWNER TO postgres;
 
 
 /*QUESTION 2*/
-CREATE OR REPLACE FUNCTION public.second_question(
-	character varying)
-    RETURNS integer
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-AS $BODY$
 declare
 	amount integer;
 begin
@@ -43,43 +53,44 @@ begin
 	where EXTRACT(YEAR FROM date) = $1::numeric
 	) Z;
 	
-	return amount;
+	return amount/12;
 end;
-$BODY$;
-
-ALTER FUNCTION public.second_question(character varying)
-    OWNER TO postgres;
 
 
 /*QUESTION 3*/ 
-CREATE OR REPLACE FUNCTION public.third_question(
-	character varying)
-    RETURNS record
-    LANGUAGE 'plpgsql'
-    COST 100
-    VOLATILE PARALLEL UNSAFE
-AS $BODY$
-declare
-	ret RECORD;
-begin
-	SELECT 
-	per.first_name,
-	per.last_name,
-	per.person_number
-	INTO ret
-	FROM
-		person as per
-		JOIN instructor as ins
-			ON per.person_id = ins.person_id
-		JOIN lesson as les
-			ON les.instructor_id = ins.instructor_id
+SELECT 
+        per.first_name,
+        per.last_name,
+        per.person_number
+        FROM
+            person as per
+            JOIN instructor as ins
+                ON per.person_id = ins.person_id
+            JOIN lesson as les
+                ON les.instructor_id = ins.instructor_id
 
-	WHERE ins.person_id = 865;
-	
-	return ret;
-end;
-$BODY$;
+        WHERE (SELECT count(*) WHERE les.instructor_id = ins.instructor_id) = ?;
 
-ALTER FUNCTION public.third_question(character varying)
-    OWNER TO postgres;
 
+/*QUESTION 4*/
+SELECT * FROM 
+    lesson AS les
+    JOIN ensembles as ens
+        ON les.lesson_id = ens.lesson_id
+    WHERE 
+        (ens.maximum_number_of_students - (SELECT COUNT() FROM lesson WHERE lesson_id = ens.lesson_id) >= 1) AND
+        (ens.maximum_number_of_students - (SELECT COUNT() FROM lesson WHERE lesson_id = ens.lesson_id) <= 2)
+
+SELECT * FROM 
+    lesson AS les
+    JOIN ensembles as ens
+        ON les.lesson_id = ens.lesson_id
+    WHERE 
+        (ens.maximum_number_of_students - (SELECT COUNT(*) FROM lesson WHERE lesson_id = ens.lesson_id) = 0) 
+
+SELECT * FROM 
+    lesson AS les
+    JOIN ensembles as ens
+        ON les.lesson_id = ens.lesson_id
+    WHERE 
+        (ens.maximum_number_of_students - (SELECT COUNT(*) FROM lesson WHERE lesson_id = ens.lesson_id) > 2)
