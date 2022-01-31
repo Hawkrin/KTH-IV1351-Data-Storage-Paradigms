@@ -5,7 +5,7 @@ Learning Outcome:
 
 - Analysis in the form of a Conceptual model and a Physical/Logical model.
 - Create a database and insert template data(postgreSQL)
-- Creating queries which can be used by sql and a java program.
+- Creating queries which can be used by sql and a java program via JDBC.
 
 Physical/Logical model:
 ![analysFix1](https://i.imgur.com/ONPRg5G.png)
