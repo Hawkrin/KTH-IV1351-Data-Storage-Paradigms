@@ -1,0 +1,11 @@
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('120', '62', '3');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('121', '63', '1');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('122', '64', '2');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('123', '65', '7');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('124', '66', '6');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('125', '67', '3');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('126', '68', '4');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('127', '69', '2');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('128', '70', '1');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('129', '71', '2');
+insert into individual_lesson (individual_lesson_id, lesson_id, appointments) values ('130', '72', '1');
