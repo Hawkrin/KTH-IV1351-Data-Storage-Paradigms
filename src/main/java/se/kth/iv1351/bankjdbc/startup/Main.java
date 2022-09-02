@@ -22,6 +22,12 @@
  * THE SOFTWARE.
  */
 
+
+/*Main skapar en instans av blockinginterpreter som tar emot en
+controller,
+
+controller skapar funktioner med hjälp av bankDAOs funktioner */
+
 package se.kth.iv1351.bankjdbc.startup;
 
 import se.kth.iv1351.bankjdbc.controller.Controller;

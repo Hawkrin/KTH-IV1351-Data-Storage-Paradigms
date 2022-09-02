@@ -1,12 +1,6 @@
 /*QUESTION 1*/
 declare
 	amount bigint;
-	individual_lessons bigint;
-	group_lessons bigint;
-	ensemble_lessons bigint;
-	
-	id_lesson bigint;
-	
 begin
 	select count(*)
 	into amount
@@ -14,30 +8,7 @@ begin
 	where EXTRACT(YEAR FROM date) = $1::numeric AND
 	EXTRACT(MONTH FROM date) = $2::numeric;
 	
-	select lesson_id
-	into id_lesson
-	from lesson
-	where EXTRACT(YEAR FROM date) = $1::numeric AND
-	EXTRACT(MONTH FROM date) = $2::numeric;
-	
-	select count(*)
-	into individual_lessons
-	from individual_lesson
-	where lesson_id=id_lesson;
-	
-	select count(*)
-	into group_lessons
-	from group_lesson
-	where lesson_id=id_lesson;
-		
-	select count(*)
-	into ensemble_lessons
-	from ensembles
-	where lesson_id=id_lesson;
-	
-	return  (individual_lessons::numeric+ group_lessons::numeric+ensemble_lessons::numeric)::name || ' ' || individual_lessons || ' ' || group_lessons || ' ' || ensemble_lessons;
-	
-	
+	return amount;
 end;
 
 
