@@ -65,3 +65,20 @@ SELECT * FROM
         ON les.lesson_id = ens.lesson_id
     WHERE 
         (ens.maximum_number_of_students - (SELECT COUNT(*) FROM lesson WHERE lesson_id = ens.lesson_id) > 2)
+
+
+/*QUESTION 5*/
+SELECT s.instrument_type instrument_type, s.instrument_brand brand, p.first_name, p.last_name, r.amount quantity FROM 
+    instrument_renting r INNER
+    JOIN instrument_stock s 
+        ON r.instrument_stock_id = s.instrument_stock_id
+    INNER JOIN student 
+        ON student.student_id = r.student_id 
+    INNER JOIN person p
+        ON p.person_id = student.person_id
+
+/*QUESTION 6*/
+UPDATE instrument_renting 
+    SET terminated = true 
+    WHERE instrument_renting_id = ?
+
